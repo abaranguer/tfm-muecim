@@ -1,4 +1,4 @@
-Import os
+import os
 import json
 
 import torch
@@ -20,8 +20,8 @@ from torchtext.data.utils import get_tokenizer
 # https://hussainwali.medium.com/transforming-your-text-data-with-pytorch-12ec1b1c9ae6
 # conda install pytorch::torchtext
 
-#class EURLEX57KDataset(Dataset):
-    
+# https://www.datacamp.com/tutorial/nlp-with-pytorch-a-comprehensive-guide
+
 if __name__ == '__main__':
     # load labels
     fp = open('data/datasets/EURLEX57K/EURLEX57K.json')
@@ -74,7 +74,9 @@ if __name__ == '__main__':
                     for line in lines:
                         line_vector = tokenizer(line)
                         line_vector_length = len(line_vector)
-                        max_line_vector_length = max(max_line_vector_length, line_vector_length)
+                        max_line_vector_length = max(
+                            max_line_vector_length,
+                            line_vector_length)
 
                 # print('total length: ', total_length)
                 # print('total lines: ', total_lines)
@@ -83,7 +85,9 @@ if __name__ == '__main__':
                 
                 absolute_max_length = max(absolute_max_length, max_len)
                 absolute_max_num_lines = max(absolute_max_num_lines, total_lines)
-                absolute_max_line_vector_length = max(absolute_max_line_vector_length, max_line_vector_length)
+                absolute_max_line_vector_length = max(
+                    absolute_max_line_vector_length,
+                    max_line_vector_length)
             
                 #concepts = json_file.get('concepts')
                 #for concept in concepts:
@@ -99,7 +103,9 @@ if __name__ == '__main__':
 
             print('absolute max  length: ', absolute_max_length)
             print('absolute_max_num_lines: ', absolute_max_num_lines)
-            print('absolute_max_lines_vector_length: ', absolute_max_line_vector_length)
+            print(
+                'absolute_max_lines_vector_length: ',
+                absolute_max_line_vector_length)
             print('---------------------')
         
             '''
