@@ -16,3 +16,5 @@ class VocabularyBuilder(self):
         tokensGenerator = EURLEX57KMainBodySimpleTokensGenerator()
         self.vocab = torchtext.vocab.build_vocab_from_iterator(tokensGenerator)
         print('Vocabulary builded.')
+
+    
