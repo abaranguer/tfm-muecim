@@ -9,5 +9,13 @@ class BERTTokenizer:
         print('Loading bert-base-cased.')
         self.tokenizer = AutoTokenizer.from_pretrained("bert-base-cased")
 
+
+if __name__ == '__main__':
+    bertTknzr = BERTTokenizer()
+    toks = bertTknzr.tokenizer.tokenize('this is a test')
+    ids = bertTknzr.tokenizer.convert_tokens_to_ids(toks)
+    print(f'toks: {toks}')
+    print(f'ids: {ids}')
+    
     
     
