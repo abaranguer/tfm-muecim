@@ -17,6 +17,7 @@ class EURLEX57KMainBodyLinesGenerator:
                     fp = open(full_name, 'r')
                     json_file = json.load(fp)
                     main_body = json_file.get('main_body')
+                    fp.close()
                     for part in main_body:
                         lines = part.split('\n')
                         for line in lines:
