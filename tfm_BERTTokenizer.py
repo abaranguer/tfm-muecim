@@ -6,8 +6,13 @@ from transformers import AutoTokenizer, AutoModel
 
 class BERTTokenizer:
     def __init__(self, ):
-        print('Loading bert-base-cased.')
-        self.tokenizer = AutoTokenizer.from_pretrained("bert-base-cased")
+        print('Loading bert-base-cased tokenizer.')
+        self.tokenizer = AutoTokenizer.from_pretrained('bert-base-cased')
+
+class BERTModel:
+    def __init__(self, ):
+        print('Loading bert-base-cased model.')
+        self.model = AutoModel.from_pretrained('bert-base-cased')
 
 
 if __name__ == '__main__':
@@ -16,6 +21,10 @@ if __name__ == '__main__':
     ids = bertTknzr.tokenizer.convert_tokens_to_ids(toks)
     print(f'toks: {toks}')
     print(f'ids: {ids}')
-    
+    print('Load model')
+    bertModel = BERTModel()
+    model = bertModel.model
+    print(f'Model: {model}')
+    print('Model loaded')
     
     
