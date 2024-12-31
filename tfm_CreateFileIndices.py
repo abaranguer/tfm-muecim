@@ -6,7 +6,7 @@ class FilesIndexCreator:
         folders = ['dev','test','train']
 
         ixg = 0
-        filesIndexFileName = f'{folderBase}/FilesIndex.txt'
+        filesIndexFileName = './FilesIndex.txt'
         fdg = open(filesIndexFileName, 'w')
         for folder in folders:
             filesIndexFileName = f'{folderBase}/{folder}FilesIndex.txt'
