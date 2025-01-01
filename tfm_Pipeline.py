@@ -17,7 +17,16 @@ if __name__ == '__main__':
     testDataLoader = DataLoader(testData, batch_size=64, shuffle=True)
 
     # iterate through val batches
-    for batch in enumerate(valDataLoader):
-        print(batched['data'].size(), batched['labels'].size())    
+    for i, batch in enumerate(valDataLoader):
+        print(f'Batch {i}: ')
+        batchFileNames = batch.get('fileName')
+        batchData = batch.get('data')
+        batchLabels = batch.get('labels')
 
+        for elem in zip(batchFileNames, batchData, batchLabels):
+            print(f'fileName: {elem[0]}')
+            print(f'data:\n{elem[1]}')
+            print(f'labels:\n{elem[2]}')
+
+            exit()
     print('Done!')

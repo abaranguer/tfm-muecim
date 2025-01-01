@@ -2,13 +2,17 @@ import torch
 import json
 import numpy as np
 from tfm_BERTTokenizer import BERTTokenizer
-
+from tfm_LabelLoader import LabelLoader
 
 class EURLEX57KDataset(torch.utils.data.Dataset):
     def __init__(self, fileIndex):
         self.fileIndex = fileIndex
         self.listFiles = {}
         self.bertTknzr = BERTTokenizer()
+        labelLoader = LabelLoader()
+        self.numLabels = len(labelLoader.labels)
+        self.labelsDict = {}
+        self.loadLabelsDict()
         self.loadFiles()
         
     def __getitem__(self, idx):
@@ -16,7 +20,7 @@ class EURLEX57KDataset(torch.utils.data.Dataset):
         fd = open(fileName, 'r')
         jsonObj = json.load(fd)
         fd.close()
-        item =  self.toTensor(jsonObj)
+        item =  self.toTensor(fileName, jsonObj)
         return item
     
     def __len__(self):
@@ -31,9 +35,18 @@ class EURLEX57KDataset(torch.utils.data.Dataset):
             value = tokens[1].strip()
             self.listFiles[int(key)] = value
 
+    def loadLabelsDict(self):
+        fd = open('LabelIndex.txt', 'r')
+        lines = fd.readlines()
         fd.close()
 
-    def toTensor(self, jsonObj):
+        for line in lines:
+            toks = line.split(',')
+            index = toks[0]
+            label = toks[1].strip()
+            self.labelsDict[label] = int(index)
+
+    def toTensor(self, fileName, jsonObj):
         labels = jsonObj.get('concepts')
         title = jsonObj.get('title')
         header = jsonObj.get('header')
@@ -46,15 +59,21 @@ class EURLEX57KDataset(torch.utils.data.Dataset):
         rawFlattenedData = self.getData(rawFullText)
         filteredData =  self.filterData(rawFlattenedData)
         item = {}
+        item['fileName'] = fileName
         item['data'] =  self.dataToTensor(filteredData)
         item['labels'] = self.getLabels(labels)
 
         return item
     
+############  REVISAR
     def getLabels(self, labels):
-        labelsInt = [int(label) for label in labels]
+        labelsArray = np.zeros(self.numLabels, dtype=int)
+        for label in labels:
+            idx = self.labelsDict.get(label)
+            labelsArray[idx] = 1
  
-        return torch.tensor(labelsInt)
+        return torch.tensor(labelsArray)
+############
 
     def getData(self, raw):
         data = []
@@ -89,8 +108,7 @@ class EURLEX57KDataset(torch.utils.data.Dataset):
         return linesFlattened;
         
     def filterData(self, dataRaw):
-        # res, per ara.
-        
+        # at the moment, do nothing.         
         return dataRaw
 
 if __name__ == '__main__':
