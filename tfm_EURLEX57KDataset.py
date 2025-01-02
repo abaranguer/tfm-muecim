@@ -38,7 +38,7 @@ class EURLEX57KDataset(torch.utils.data.Dataset):
 
     def loadLabelsDict(self):
         fd = open('LabelIndex.txt', 'r')
-        lines = fd.readlines()
+ g       lines = fd.readlines()
         fd.close()
 
         for line in lines:
