@@ -1,3 +1,4 @@
+import os
 import torch
 import json
 import numpy as np
@@ -65,15 +66,13 @@ class EURLEX57KDataset(torch.utils.data.Dataset):
 
         return item
     
-############  REVISAR
     def getLabels(self, labels):
         labelsArray = np.zeros(self.numLabels, dtype=int)
         for label in labels:
-            idx = self.labelsDict.get(label)
+            idx = self.labelsDict.get(f"'{label}'")
             labelsArray[idx] = 1
  
         return torch.tensor(labelsArray)
-############
 
     def getData(self, raw):
         data = []
@@ -111,10 +110,19 @@ class EURLEX57KDataset(torch.utils.data.Dataset):
         # at the moment, do nothing.         
         return dataRaw
 
+
+def countNonZeroLabels(items):
+    nonZero = torch.nonzero(items, as_tuple= True)
+    return len(nonZero[0])
+    
 if __name__ == '__main__':
+    os.system("clear")
+    print('Test dataset\n')
     ds = EURLEX57KDataset('FilesIndexShort.txt')
     for i in range(5):
         item = ds.__getitem__(i)
         print(i, 'item["data"]: ', item["data"].shape)
         print(i, 'item["labels"]: ', item["labels"])
-        print('data: ', item['data'][0:10])
+        print(i, 'Nonzero labels: ', countNonZeroLabels(item["labels"]))         
+        print('data (5 first elements): ', item['data'][0:5],'\n')
+        
