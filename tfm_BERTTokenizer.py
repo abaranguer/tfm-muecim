@@ -19,6 +19,7 @@ class BERTTokenizer:
     def reset(self):
         self.lines = []
         self.tokens = np.array([])
+        self.atentionMask = np.zeros(768)
 
     def tokenize(self, lines):
         self.lines = lines
@@ -30,19 +31,23 @@ class BERTTokenizer:
             self.concatenate(idsNp)
             self.adjustlength()
             tokensTensor = torch.from_numpy(self.tokens)
-            return tokensTensor
+            attentionMask = torch.from_numpy(self.attentionMask)
+            return tokensTensor, attentionMask
 
     def adjustlength(self):
+        self.attentionMask = np.ones(self.tokens.size, dtype = int)
         if self.tokens.size < 768:
             self.padWithZeros()
 
         if self.tokens.size > 768:
             self.tokens = self.tokens[0:768]
+            self.attentionMask = self.attentionMask[0:768] 
 
     def padWithZeros(self):
         lenPadArray = 768 - self.tokens.size
         padArray = np.zeros(lenPadArray, dtype=int)
         self.tokens = np.concatenate((self.tokens, padArray))
+        self.attentionMask = np.concatenate((self.attentionmask, padArray))
 
     def concatenate(self, idsNp):
         if self.tokens.size > 0:

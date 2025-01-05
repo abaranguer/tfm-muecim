@@ -7,7 +7,7 @@ from transformers import AutoModelForSequenceClassification
 from transformers import TrainingArguments, Trainer
 from transformers import EvalPrediction
 from sklearn.metrics import f1_score, roc_auc_score, accuracy_score
-
+ 
 def countNonZeroLabels(items):
     nonZero = torch.nonzero(items, as_tuple= True)
     return len(nonZero[0])
@@ -40,8 +40,6 @@ def compute_metrics(p: EvalPrediction):
         labels=p.label_ids)
     return result
 
-    
-
 # Fine-tuning BERT (and friends) for multi-label text classification.ipynb
 # https://colab.research.google.com/github/NielsRogge/Transformers-Tutorials
 # /blob/master/BERT/
@@ -51,32 +49,38 @@ def compute_metrics(p: EvalPrediction):
 if __name__ == '__main__':
     os.system("clear")
     print('Test pipeline\n')
+
+    baseDir = '/content/drive/My Drive/TFM-MUECIM'
+    # sys.path.append(baseDir)
     
     # ensures reproducibility
     torch.manual_seed(0)
 
     # load labels
-    labelLoader = LabelLoader()
+    labelLoader = LabelLoader(baseDir)
     
     # create train, val and test datasets
-    ds = EURLEX57KDataset('FilesIndex.txt')
+    indexFile = 'FilesIndex.txt'
+    ds = EURLEX57KDataset(baseDir, indexFile)
     trainData, valData, testData = random_split(ds, [45000, 6000, 6000])
 
     # set batch size
     batchSize = 10
     
     # create dataloaders
-    trainDataLoader = DataLoader(trainData, batch_size=batchSize, shuffle=True)
-    valDataLoader = DataLoader(valData, batch_size=8, shuffle=True)
-    testDataLoader = DataLoader(testData, batch_size=8, shuffle=True)
+    #trainDataLoader = DataLoader(trainData, batch_size=batchSize, shuffle=True)
+    #valDataLoader = DataLoader(valData, batch_size=batchSize, shuffle=True)
+    #testDataLoader = DataLoader(testData, batch_size=batchSize, shuffle=True)
 
     # bert huggingface pretrained model 
     model = AutoModelForSequenceClassification.from_pretrained(
         "bert-base-cased", 
         problem_type="multi_label_classification", 
-        num_labels=len(labelLoader.labels),
-        id2label=id2label,
-        label2id=label2id)
+        num_labels=len(labelLoader.labels))
+
+    #,
+    #    id2label=id2label,
+    #    label2id=label2id)
 
     # metric
     metricName = 'f1'
@@ -96,9 +100,15 @@ if __name__ == '__main__':
     )
 
     #forward pass
+    #outputs = model(
+    #    input_ids=encoded_dataset['train']['input_ids'][0].unsqueeze(0),
+    #    labels=encoded_dataset['train'][0]['labels'].unsqueeze(0))
+
+    
     outputs = model(
-        input_ids=encoded_dataset['train']['input_ids'][0].unsqueeze(0),
-        labels=encoded_dataset['train'][0]['labels'].unsqueeze(0))
+        input_ids=train_data.unsqueeze(0),
+        labels=encoded_datasettrain_data['train'][0]['labels'].unsqueeze(0))
+
 
     trainer = Trainer(
         model,

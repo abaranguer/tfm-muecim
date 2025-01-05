@@ -6,11 +6,12 @@ from tfm_BERTTokenizer import BERTTokenizer
 from tfm_LabelLoader import LabelLoader
 
 class EURLEX57KDataset(torch.utils.data.Dataset):
-    def __init__(self, fileIndex):
+    def __init__(self, baseDir, fileIndex):
         self.fileIndex = fileIndex
+        self.baseDir = baseDir
         self.listFiles = {}
         self.bertTknzr = BERTTokenizer()
-        labelLoader = LabelLoader()
+        labelLoader = LabelLoader(self.baseDir)
         self.numLabels = len(labelLoader.labels)
         self.labelsDict = {}
         self.loadLabelsDict()
@@ -18,7 +19,7 @@ class EURLEX57KDataset(torch.utils.data.Dataset):
         
     def __getitem__(self, idx):
         fileName = self.listFiles[idx]
-        fd = open(fileName, 'r')
+        fd = open(f'{self.baseDir}/{fileName}', 'r')
         jsonObj = json.load(fd)
         fd.close()
         item =  self.toTensor(fileName, jsonObj)
@@ -28,7 +29,7 @@ class EURLEX57KDataset(torch.utils.data.Dataset):
         return len(self.listFiles)
 
     def loadFiles(self):
-        fd = open(self.fileIndex, "r")
+        fd = open(f'{self.baseDir}/{self.fileIndex}', 'r')
         lines = fd.readlines()
         for line in lines:
             tokens = line.split(',')
@@ -37,8 +38,8 @@ class EURLEX57KDataset(torch.utils.data.Dataset):
             self.listFiles[int(key)] = value
 
     def loadLabelsDict(self):
-        fd = open('LabelIndex.txt', 'r')
- g       lines = fd.readlines()
+        fd = open(f'{self.baseDir}/LabelIndex.txt', 'r')
+        lines = fd.readlines()
         fd.close()
 
         for line in lines:
@@ -61,7 +62,7 @@ class EURLEX57KDataset(torch.utils.data.Dataset):
         filteredData =  self.filterData(rawFlattenedData)
         item = {}
         item['fileName'] = fileName
-        item['data'] =  self.dataToTensor(filteredData)
+        item['input_ids'], item['attention_mask'] =  self.dataToTensor(filteredData)
         item['labels'] = self.getLabels(labels)
 
         return item
@@ -89,9 +90,9 @@ class EURLEX57KDataset(torch.utils.data.Dataset):
     def dataToTensor(self, data):
         self.bertTknzr.reset()
         lines = self.getLines(data)
-        tokensTensor = self.bertTknzr.tokenize(lines)
+        tokensTensor, attentionMask = self.bertTknzr.tokenize(lines)
         
-        return tokensTensor
+        return tokensTensor, attentionMask
 
     def getLines(self, data):
         linesFlattened = []
@@ -118,10 +119,11 @@ def countNonZeroLabels(items):
 if __name__ == '__main__':
     os.system("clear")
     print('Test dataset\n')
-    ds = EURLEX57KDataset('FilesIndexShort.txt')
+    baseDir = '/content/drive/My Drive/TFM-MUECIM'
+    ds = EURLEX57KDataset(baseDir,'FilesIndexShort.txt')
     for i in range(5):
         item = ds.__getitem__(i)
-        print(i, 'item["data"]: ', item["data"].shape)
+        print(i, 'item["input_ids"]: ', item["input_ids"].shape)
         print(i, 'item["labels"]: ', item["labels"])
         print(i, 'Nonzero labels: ', countNonZeroLabels(item["labels"]))         
         print('data (5 first elements): ', item['data'][0:5],'\n')
