@@ -47,7 +47,7 @@ class BERTTokenizer:
         lenPadArray = 768 - self.tokens.size
         padArray = np.zeros(lenPadArray, dtype=int)
         self.tokens = np.concatenate((self.tokens, padArray))
-        self.attentionMask = np.concatenate((self.attentionmask, padArray))
+        self.attentionMask = np.concatenate((self.attentionMask, padArray))
 
     def concatenate(self, idsNp):
         if self.tokens.size > 0:

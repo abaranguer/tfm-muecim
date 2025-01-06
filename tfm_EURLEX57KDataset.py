@@ -68,10 +68,10 @@ class EURLEX57KDataset(torch.utils.data.Dataset):
         return item
     
     def getLabels(self, labels):
-        labelsArray = np.zeros(self.numLabels, dtype=int)
+        labelsArray = np.zeros(self.numLabels)
         for label in labels:
             idx = self.labelsDict.get(f"'{label}'")
-            labelsArray[idx] = 1
+            labelsArray[idx] = 1.00
  
         return torch.tensor(labelsArray)
 
