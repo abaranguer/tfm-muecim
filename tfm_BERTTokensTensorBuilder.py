@@ -10,21 +10,23 @@ from transformers import AutoTokenizer
 # descartant els tokens sobrants (cropping)
 # o completant amb zeros (padding)
 
-class BERTTokenizer:
+class BERTTokensTensorBuilder:
     def __init__(self):
+        
+        self.numInFeatures = 512
         self.reset()
         print('Loading bert-base-cased tokenizer.')
-        self.tknzr = AutoTokenizer.from_pretrained('bert-base-cased')
+        self.tknzr = AutoTokenizer.from_pretrained('google-bert/bert-base-cased')
 
     def reset(self):
         self.lines = []
         self.tokens = np.array([])
-        self.atentionMask = np.zeros(768)
+        self.atentionMask = np.zeros(self.numInFeatures) #768
 
     def tokenize(self, lines):
         self.lines = lines
         for line in self.lines:
-            seq = line[:512]
+            seq = line[:self.numInFeatures]
             toks = self.tknzr.tokenize(seq)
             ids = self.tknzr.convert_tokens_to_ids(toks)
             idsNp = np.array(ids)
@@ -36,15 +38,15 @@ class BERTTokenizer:
 
     def adjustlength(self):
         self.attentionMask = np.ones(self.tokens.size, dtype = int)
-        if self.tokens.size < 768:
+        if self.tokens.size < self.numInFeatures: #768
             self.padWithZeros()
 
-        if self.tokens.size > 768:
-            self.tokens = self.tokens[0:768]
-            self.attentionMask = self.attentionMask[0:768] 
+        if self.tokens.size > self.numInFeatures: # 768
+            self.tokens = self.tokens[0:self.numInFeatures] #768
+            self.attentionMask = self.attentionMask[0:self.numInFeatures]  #768
 
     def padWithZeros(self):
-        lenPadArray = 768 - self.tokens.size
+        lenPadArray = self.numInFeatures - self.tokens.size  # 768
         padArray = np.zeros(lenPadArray, dtype=int)
         self.tokens = np.concatenate((self.tokens, padArray))
         self.attentionMask = np.concatenate((self.attentionMask, padArray))

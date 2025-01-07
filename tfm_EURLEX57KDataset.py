@@ -2,7 +2,7 @@ import os
 import torch
 import json
 import numpy as np
-from tfm_BERTTokenizer import BERTTokenizer
+from tfm_BERTTokensTensorBuilder import BERTTokensTensorBuilder
 from tfm_LabelLoader import LabelLoader
 
 class EURLEX57KDataset(torch.utils.data.Dataset):
@@ -10,7 +10,7 @@ class EURLEX57KDataset(torch.utils.data.Dataset):
         self.fileIndex = fileIndex
         self.baseDir = baseDir
         self.listFiles = {}
-        self.bertTknzr = BERTTokenizer()
+        self.bertTknzr = BERTTokensTensorBuilder()
         labelLoader = LabelLoader(self.baseDir)
         self.numLabels = len(labelLoader.labels)
         self.labelsDict = {}
