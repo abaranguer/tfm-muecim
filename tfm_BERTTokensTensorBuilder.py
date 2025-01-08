@@ -5,8 +5,7 @@ import torch
 from transformers import AutoTokenizer
 
 # convertint el text del main_body de cada cada json
-# en un vector de 768 elements (768 és el nombre de input-features
-# de la input layer del BertModel de la llibreria Huggingface)   
+# en un vector de 512 elements (mida de l' input layer del model de la llibreria Huggingface)   
 # descartant els tokens sobrants (cropping)
 # o completant amb zeros (padding)
 
@@ -15,8 +14,8 @@ class BERTTokensTensorBuilder:
         
         self.numInFeatures = 512
         self.reset()
-        print('Loading bert-base-cased tokenizer.')
-        self.tknzr = AutoTokenizer.from_pretrained('google-bert/bert-base-cased')
+        print('Loading distilbert-base-uncased tokenizer.')
+        self.tknzr = AutoTokenizer.from_pretrained('distilbert-base-uncased')
 
     def reset(self):
         self.lines = []

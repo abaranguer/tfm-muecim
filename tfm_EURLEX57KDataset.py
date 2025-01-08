@@ -4,26 +4,24 @@ import json
 import numpy as np
 from tfm_BERTTokensTensorBuilder import BERTTokensTensorBuilder
 from tfm_LabelLoader import LabelLoader
+import pandas as pd
 
 class EURLEX57KDataset(torch.utils.data.Dataset):
     def __init__(self, baseDir, fileIndex):
         self.fileIndex = fileIndex
         self.baseDir = baseDir
         self.listFiles = {}
+        self.dataSet = []
         self.bertTknzr = BERTTokensTensorBuilder()
         labelLoader = LabelLoader(self.baseDir)
         self.numLabels = len(labelLoader.labels)
         self.labelsDict = {}
         self.loadLabelsDict()
         self.loadFiles()
+        self.buildDataFrame()
         
     def __getitem__(self, idx):
-        fileName = self.listFiles[idx]
-        fd = open(f'{self.baseDir}/{fileName}', 'r')
-        jsonObj = json.load(fd)
-        fd.close()
-        item =  self.toTensor(fileName, jsonObj)
-        return item
+        return self.dataSet[idx]
     
     def __len__(self):
         return len(self.listFiles)
@@ -110,6 +108,23 @@ class EURLEX57KDataset(torch.utils.data.Dataset):
     def filterData(self, dataRaw):
         # at the moment, do nothing.         
         return dataRaw
+
+    def buildDataFrame(self):
+        numFiles = len(self.listFiles)
+        for ix in range(numFiles):
+            item = self.getElementFromFile(ix)
+            self.dataSet.append(item)
+            if (ix % 1000 == 0):
+                print(f'Index: {ix}')
+
+    def getElementFromFile(self, idx):
+        fileName = self.listFiles[idx]
+        fd = open(f'{self.baseDir}/{fileName}', 'r')
+        jsonObj = json.load(fd)
+        fd.close()
+        item =  self.toTensor(fileName, jsonObj)
+        return item
+
 
 
 def countNonZeroLabels(items):
