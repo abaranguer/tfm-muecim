@@ -1,7 +1,6 @@
 import os
 import json
 import numpy as np
-import torch
 from transformers import AutoTokenizer
 
 # convertint el text del main_body de cada cada json
@@ -9,9 +8,8 @@ from transformers import AutoTokenizer
 # descartant els tokens sobrants (cropping)
 # o completant amb zeros (padding)
 
-class BERTTokensTensorBuilder:
+class BERTTokensBuilder:
     def __init__(self):
-        
         self.numInFeatures = 512
         self.reset()
         print('Loading distilbert-base-uncased tokenizer.')
@@ -31,9 +29,7 @@ class BERTTokensTensorBuilder:
             idsNp = np.array(ids)
             self.concatenate(idsNp)
             self.adjustlength()
-            tokensTensor = torch.from_numpy(self.tokens)
-            attentionMask = torch.from_numpy(self.attentionMask)
-            return tokensTensor, attentionMask
+            return self.tokens, self.attentionMask
 
     def adjustlength(self):
         self.attentionMask = np.ones(self.tokens.size, dtype = int)

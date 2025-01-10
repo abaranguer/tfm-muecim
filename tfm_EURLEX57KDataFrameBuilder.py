@@ -1,19 +1,18 @@
 import os
-import torch
 import json
 import numpy as np
-from tfm_BERTTokensTensorBuilder import BERTTokensTensorBuilder
+from tfm_BERTTokensBuilder import BERTTokensBuilder
 from tfm_LabelLoader import LabelLoader
 import pandas as pd
 
-class EURLEX57KTensorDatasetBuilder:
-    def __init__(self, baseDir, fileIndex, tensorDatasetFileName):
+class EURLEX57KDataFrameBuilder:
+    def __init__(self, baseDir, fileIndex, dataFrameFileName):
         self.fileIndex = fileIndex
         self.baseDir = baseDir
-        self.tensorDatasetFileName = tensorDatasetFileName
+        self.dataFrameFileName = dataFrameFileName
         self.listFiles = {}
         self.dataSet = []
-        self.bertTknzr = BERTTokensTensorBuilder()
+        self.bertTknzr = BERTTokensBuilder()
         labelLoader = LabelLoader(self.baseDir)
         self.numLabels = len(labelLoader.labels)
         self.labelsDict = {}
@@ -42,7 +41,7 @@ class EURLEX57KTensorDatasetBuilder:
             label = toks[1].strip()
             self.labelsDict[label] = int(index)
 
-    def toTensor(self, fileName, jsonObj):
+    def toDict(self, fileName, jsonObj):
         labels = jsonObj.get('concepts')
         title = jsonObj.get('title')
         header = jsonObj.get('header')
@@ -56,7 +55,9 @@ class EURLEX57KTensorDatasetBuilder:
         filteredData =  self.filterData(rawFlattenedData)
         item = {}
         item['fileName'] = fileName
-        item['input_ids'], item['attention_mask'] =  self.dataToTensor(filteredData)
+        item['input_ids'], item['attention_mask'] =  self.dataToTokens(filteredData)
+        #tokensTensor = torch.from_numpy(self.tokens)
+        #attentionMask = torch.from_numpy(self.attentionMask)
         item['labels'] = self.getLabels(labels)
 
         return item
@@ -66,9 +67,10 @@ class EURLEX57KTensorDatasetBuilder:
         for label in labels:
             idx = self.labelsDict.get(f"'{label}'")
             labelsArray[idx] = 1.00
- 
-        return torch.tensor(labelsArray)
 
+        # return torch.tensor(labelsArray)
+        return labelsArray
+      
     def getData(self, raw):
         data = []
         for item in raw:
@@ -81,12 +83,12 @@ class EURLEX57KTensorDatasetBuilder:
 
         return data
 
-    def dataToTensor(self, data):
+    def dataToTokens(self, data):
         self.bertTknzr.reset()
         lines = self.getLines(data)
-        tokensTensor, attentionMask = self.bertTknzr.tokenize(lines)
+        inputIds, attentionMask = self.bertTknzr.tokenize(lines)
         
-        return tokensTensor, attentionMask
+        return inputIds, attentionMask
 
     def getLines(self, data):
         linesFlattened = []
@@ -107,6 +109,7 @@ class EURLEX57KTensorDatasetBuilder:
 
     def buildDataFrame(self):
         numFiles = len(self.listFiles)
+        print('Building data frame')
         for ix in range(numFiles):
             item = self.getElementFromFile(ix)
             self.dataSet.append(item)
@@ -118,17 +121,20 @@ class EURLEX57KTensorDatasetBuilder:
         fd = open(f'{self.baseDir}/{fileName}', 'r')
         jsonObj = json.load(fd)
         fd.close()
-        item =  self.toTensor(fileName, jsonObj)
+        item =  self.toDict(fileName, jsonObj)
         return item
 
     def saveDataFrame(self):
-        fullFileName = f'{self.baseDir}/{self.tensorDatasetFileName}'
-        torch.save(self.dataSet, fullFileName)
+        print('Init CSV saving')
+        fullFileName = f'{self.baseDir}/{self.dataFrameFileName}'
+        df = pd.DataFrame(self.dataSet)
+        df.to_csv(fullFileName)
+        print('CSV DataFrame Created')
 
-    
+        
 if __name__ == '__main__':
     os.system("clear")
-    print('Build tensor dataset\n')
+    print('Build CSV Dataframe\n')
     baseDir = '.'
-    EURLEX57KTensorDatasetBuilder(baseDir,'FilesIndex.txt', 'EURLEX57KTensorDataset.pt')
+    EURLEX57KDataFrameBuilder(baseDir,'FilesIndex.txt', 'EURLEX57KDataFrame.csv')
         
