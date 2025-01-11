@@ -1,4 +1,5 @@
 import os
+import sys
 import json
 import numpy as np
 from tfm_BERTTokensBuilder import BERTTokensBuilder
@@ -56,8 +57,6 @@ class EURLEX57KDataFrameBuilder:
         item = {}
         item['fileName'] = fileName
         item['input_ids'], item['attention_mask'] =  self.dataToTokens(filteredData)
-        #tokensTensor = torch.from_numpy(self.tokens)
-        #attentionMask = torch.from_numpy(self.attentionMask)
         item['labels'] = self.getLabels(labels)
 
         return item
@@ -66,9 +65,8 @@ class EURLEX57KDataFrameBuilder:
         labelsArray = np.zeros(self.numLabels)
         for label in labels:
             idx = self.labelsDict.get(f"'{label}'")
-            labelsArray[idx] = 1.00
+            labelsArray[idx] = 1.0
 
-        # return torch.tensor(labelsArray)
         return labelsArray
       
     def getData(self, raw):
@@ -128,6 +126,7 @@ class EURLEX57KDataFrameBuilder:
         print('Init CSV saving')
         fullFileName = f'{self.baseDir}/{self.dataFrameFileName}'
         df = pd.DataFrame(self.dataSet)
+        np.set_printoptions(threshold=sys.maxsize)
         df.to_csv(fullFileName)
         print('CSV DataFrame Created')
 
@@ -136,5 +135,5 @@ if __name__ == '__main__':
     os.system("clear")
     print('Build CSV Dataframe\n')
     baseDir = '.'
-    EURLEX57KDataFrameBuilder(baseDir,'FilesIndex.txt', 'EURLEX57KDataFrame.csv')
+    EURLEX57KDataFrameBuilder(baseDir, 'FilesIndex.txt', 'EURLEX57KDataFrame.csv')
         

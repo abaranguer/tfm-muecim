@@ -3,22 +3,18 @@ import json
 import numpy as np
 from transformers import AutoTokenizer
 
-# convertint el text del main_body de cada cada json
-# en un vector de 512 elements (mida de l' input layer del model de la llibreria Huggingface)   
-# descartant els tokens sobrants (cropping)
-# o completant amb zeros (padding)
-
 class BERTTokensBuilder:
-    def __init__(self):
+    def __init__(self, numInFeatures=512, modelName='distilbert-base-uncased'):
         self.numInFeatures = 512
+        self.modelName = modelName
         self.reset()
-        print('Loading distilbert-base-uncased tokenizer.')
-        self.tknzr = AutoTokenizer.from_pretrained('distilbert-base-uncased')
+        print(f'Loading "{modelName}" tokenizer.')
+        self.tknzr = AutoTokenizer.from_pretrained(modelName)
 
     def reset(self):
         self.lines = []
         self.tokens = np.array([])
-        self.atentionMask = np.zeros(self.numInFeatures) #768
+        self.atentionMask = np.zeros(self.numInFeatures)
 
     def tokenize(self, lines):
         self.lines = lines
@@ -33,15 +29,15 @@ class BERTTokensBuilder:
 
     def adjustlength(self):
         self.attentionMask = np.ones(self.tokens.size, dtype = int)
-        if self.tokens.size < self.numInFeatures: #768
+        if self.tokens.size < self.numInFeatures:
             self.padWithZeros()
 
-        if self.tokens.size > self.numInFeatures: # 768
-            self.tokens = self.tokens[0:self.numInFeatures] #768
-            self.attentionMask = self.attentionMask[0:self.numInFeatures]  #768
+        if self.tokens.size > self.numInFeatures:
+            self.tokens = self.tokens[0:self.numInFeatures]
+            self.attentionMask = self.attentionMask[0:self.numInFeatures]
 
     def padWithZeros(self):
-        lenPadArray = self.numInFeatures - self.tokens.size  # 768
+        lenPadArray = self.numInFeatures - self.tokens.size
         padArray = np.zeros(lenPadArray, dtype=int)
         self.tokens = np.concatenate((self.tokens, padArray))
         self.attentionMask = np.concatenate((self.attentionMask, padArray))
