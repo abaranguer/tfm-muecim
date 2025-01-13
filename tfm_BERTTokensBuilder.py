@@ -4,7 +4,7 @@ import numpy as np
 from transformers import AutoTokenizer
 
 class BERTTokensBuilder:
-    def __init__(self, numInFeatures=512, modelName='distilbert-base-uncased'):
+    def __init__(self, numInFeatures=512, modelName='distilbert/distilbert-base-uncased'):
         self.numInFeatures = 512
         self.modelName = modelName
         self.reset()
