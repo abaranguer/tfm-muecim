@@ -47,12 +47,12 @@ class DatasetAnalyzer:
             for label in labels:
                 value = self.filesPerLabel.get(label)
                 if (value == None):
-                    filesPerLabel = [int(fileIndex)]
-                    self.filesPerLabel[label] = filesPerLabel
+                    files = [int(fileIndex)]
+                    self.filesPerLabel[label] = files
                 else:
-                    filesPerLabel = self.filesPerLabel[label]
-                    filesPerLabel.append(int(fileIndex))
-                    self.filesPerLabel[label] = filesPerLabel
+                    files = self.filesPerLabel[label]
+                    files.append(int(fileIndex))
+                    self.filesPerLabel[label] = files
             
     def sortLabelsByFreq(self):
         self.labels = dict(sorted(self.labels.items(), key = lambda item: item[1])) 
@@ -74,7 +74,7 @@ class DatasetAnalyzer:
         print('Done!')
        
     def loadLabelsFreqsFile(self): 
-        with open(f'{baseDir}/LabelsFreqs.dat', 'rb') as fd:
+        with open(f'{self.baseDir}/LabelsFreqs.dat', 'rb') as fd:
             self.labels = pickle.load(fd)
 
         print('File read.')

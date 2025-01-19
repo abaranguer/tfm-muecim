@@ -11,10 +11,13 @@ class ReducedDatasetBuilder:
         self.reducedFilesList = {}
         self.minLabelSet = []
         self.da = DatasetAnalyzer(baseDir, fileIndex)
-        self.filesPerLabel = self.da.loadFilesPerLabelFile()         
+        # self.da.buildFilesPerLabelFile()
+        self.da.loadFilesPerLabelFile()
+        self.filesPerLabel = self.da.filesPerLabel
+        print('len(filesPerLabel): ', len(self.filesPerLabel))
         self.jsonFiles = [0 for i in range(57000)]
         
-        print('check 1: ', sum(jsonFiles))
+        print('check 1: ', sum(self.jsonFiles))
         for key in self.filesPerLabel.keys():
             self.minLabelSet.append(key)
             files = self.filesPerLabel.get(key)
@@ -34,7 +37,7 @@ class ReducedDatasetBuilder:
         
     def saveMinLabelSet(self):
         with open('ReducedLabelList.dat', 'wb') as fd:
-            pickle.save(self.minLabelSet)
+            pickle.dump(self.minLabelSet, fd)
 
 if __name__ == '__main__':
     print('Init')
