@@ -4,7 +4,7 @@ from tfm_LabelLoader import LabelLoader
 
 class LabelIndexCreator:
     def __init__(self):
-        ll = LabelLoader()
+        ll = LabelLoader('data/datasets/EURLEX57K')
         labelKeys = ll.labels.keys()
         i = 0
         self.indexLabels = {}
