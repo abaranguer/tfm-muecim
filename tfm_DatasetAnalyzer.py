@@ -85,22 +85,16 @@ class DatasetAnalyzer:
 
         print('File read.')
         
-    def showLabelsCountSorted(self):
-        self.sortLabelsByFreq()
-        accum = 0
-        for label in self.labels.keys():
-            freq =  self.labels.get(label)
-            accum = accum + freq
-            print(f'Label: {label}; freq: {freq}; accum: {accum}')
+    def buildFilesPerLabelSortedFile(self):
+        lfSortedKeys = sorted(self.labels, key = self.labels.get, reverse = True)
+        lfOrdered = []
+        for lfKey in lfSortedKeys:
+            lfOrdered.append(self.labels.get(lfKey))
 
-    def showSorted(self):
-        self.sortLabelsByFreq()
-        accum = 0
-        for label in self.labels.keys():
-            freq =  self.labels.get(label)
-            accum = accum + freq
-            print(f'Label: {label}; freq: {freq}; accum: {accum}')
+        with open(f'{self.baseDir}/LabelsFreqsOrdered.dat','wb') as fd:
+            pickle.dump(lfOrdered, fd)
 
+        
             
 if __name__ == '__main__':
     os.system("clear")
@@ -110,5 +104,5 @@ if __name__ == '__main__':
     da = DatasetAnalyzer(baseDir, 'FilesIndex.txt')
     da.buildLabelsFreqsFile()
     da.buildFilesPerLabelFile()
+    da.buildFilesperLabelSortedFile()
     print(f'Total labels found: {len(da.labels)}')
-    da.showSorted()
