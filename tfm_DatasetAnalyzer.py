@@ -104,5 +104,5 @@ if __name__ == '__main__':
     da = DatasetAnalyzer(baseDir, 'FilesIndex.txt')
     da.buildLabelsFreqsFile()
     da.buildFilesPerLabelFile()
-    da.buildFilesperLabelSortedFile()
+    da.buildFilesPerLabelSortedFile()
     print(f'Total labels found: {len(da.labels)}')
