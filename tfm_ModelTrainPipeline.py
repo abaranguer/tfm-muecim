@@ -134,7 +134,7 @@ class ModelTrainPipeline:
     def trainingPipeline(self):
         device = 'cuda' if torch.cuda.is_available() else 'cpu'
         # Move the model to the correct device before training.
-        model.to(device)
+        self.model.to(device)
 
         # baseline
         print(f'Begin epoch {self.epochNum} train session - trainer evaluate')
@@ -151,22 +151,23 @@ class ModelTrainPipeline:
 
         # evaluate epoch training
         print('End epoch train session - trainer evaluate')
-        self.er.evaluate()
+        self.trainer.evaluate()
 
         print('Metrics for test set (after train)')
         self.metricsForTestSet()
 
         print('End epoch train session')
 
-    # TODO. Review this method
-    def saveEpochTraining(self):
+    def saveEpochTraining(self, modelName, folderGDrive = '/content/drive/MyDrive/TFM-MUECIM'):
         prefixDate = datetime.today().strftime('%Y%m%d')
-        fileName = f'{prefixDate}_50L_tfm_BERT_model_epoch_{last_epoch_trained + 1}.pt'
+        fileName = f'{prefixDate}_50L_{modelName}_epoch_{self.epochNum}.pt'
         modelFullPath = os.path.join(baseDir,fileName)
-        drivePath = '/content/drive/MyDrive/TFM-MUECIM'
-        destFullPath = os.path.join(drivePath,fileName)
+        destFullPath = os.path.join(folderGDrive,fileName)
 
-        print('Saving model after epoch train session')
-        torch.save(model, modelFullPath)
+        print(f'Saving model "{modelName}" after epoch {self.epochNum} train session')
+        print(f'file name: {fileName}')
+        print(f'full path: {modelFullPath}')
+        print(f'full path (copy): {destFullPath}')
+        torch.save(self.model, modelFullPath)
         shutil.copyfile(modelFullPath, destFullPath)
         print('Done!')
