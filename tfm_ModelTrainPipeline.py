@@ -37,7 +37,7 @@ class ModelTrainPipeline:
         torch.manual_seed(0)
 
         self.ds = EURLEX57KDataset(baseDir='.', DataFrameFile=self.dataFrameFile)
-        self.fullSetSize = ds.__len__()
+        self.fullSetSize = self.ds.__len__()
         self.trainSetSize = int(self.fullSetSize * 0.8)
         self.valSetSize = int(self.fullSetSize * 0.1)
         self.testSetSize = self.fullSetSize - self.trainSetSize - self.valSetSize
