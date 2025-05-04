@@ -1,0 +1,5 @@
+0,data/datasets/EURLEX57K/dev/31994D0202.json
+1,data/datasets/EURLEX57K/dev/32000R0065.json
+2,data/datasets/EURLEX57K/dev/32008R0223.json
+3,data/datasets/EURLEX57K/dev/32011R0324.json
+4,data/datasets/EURLEX57K/dev/32003R0113.json

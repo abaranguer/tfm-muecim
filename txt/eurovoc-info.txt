@@ -1,0 +1,22 @@
+- ***** 5 stars link!
+Classification of input texts with predefined labels from the EuroVoc thesaurus
+https://www.ipu.org/ai-use-cases/classification-input-texts-with-predefined-labels-eurovoc-thesaurus
+
+A Hierarchical Label Network for Multi-label EuroVoc Classification of Legislative Contents
+https://dl.acm.org/doi/10.1007/978-3-030-30760-8_21
+
+European data
+data.europa.eu The official portal for European data
+EuroVoc Dataset
+https://data.europa.eu/data/datasets/eurovoc?locale=en
+
+EU Vocabularies
+EuroVoc
+Dataset URI:  http://publications.europa.eu/resource/dataset/eurovoc
+https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/eurovoc
+
+El tesaurus del Parlament de Catalunya
+https://www.parlament.cat/web/documentacio/recursos-documentals/tesaurus/index.html
+
+Eurovoc Multilabel Classifer
+https://huggingface.co/EuropeanParliament/eurovoc_en
