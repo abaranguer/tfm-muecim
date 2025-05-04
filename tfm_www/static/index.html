@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="ca-ES">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Classificador Multilabel - TFM Albert Baranguer Codina</title>
+    <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script type="text/javascript" src="./js/tabs.js"></script>
+    <script type="text/javascript" src="./js/classifier.js"></script>
+    <script type="text/javascript" src="./js/summarizer.js"></script>
+    <script type="text/javascript" src="./js/init.js"></script>
+    <script type="text/javascript" src="./js/messageBox.js"></script>
+  </head>
+  <body>
+
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+        <svg class="bi me-2" width="40" height="32" aria-hidden="true"><use xlink:href="#bootstrap"></use></svg>
+        <span class="fs-4">TFM - Classificador multilabel amb el dataset EURLEX57K</span>
+    </header>
+    
+    <div class="container my-10">
+      <ul class="nav nav-tabs">
+        <li class="nav-item" id="idLiClassifier">
+          <a class="nav-link" onclick="canvi('classifier')">Classificació i sumari</a>
+        </li>
+        <li class="nav-item" id="idLiCredits">
+          <a class="nav-link" onclick="canvi('credits')">Crèdits</a>
+        </li>
+      </ul>
+
+      <div id="idClassifier" style="display:none">
+        <h1>Classificació i sumari</h1>
+        <p />
+        <h3>Tria un fitxer</h3>
+        <p />
+        <h3>Fitxers del dataset</h3>
+        <div>
+          <table width="100%">
+	    <tr>
+              <td>
+                Pàgina <span id="idNumPage"></span> de 1938. Pàgina
+		<input type="number" min="1" max="1938" id="idDestPage">
+                <button onclick="goPageNum()">Ves-hi!</button>
+              </td>
+            </tr>
+            <tr>
+              <td style="vertical-align: top">
+
+		<ul class="nav nav-tabs">
+		  <li class="nav-item" id="idLiClassify">
+		    <a class="nav-link" onclick="classify()">Classifica</a>
+		  </li>
+		  <li class="nav-item" id="idLiCredits">
+		    <a class="nav-link" onclick="summarize()">Sumaritza</a>
+		  </li>
+		</ul>
+		
+		<table id="idTable" width="33%">
+		  <thead>
+		    <td> &nbsp;&nbsp; num &nbsp;&nbsp; </td>
+		    <td>id</td>
+		    <td>nom fitxer</td>
+		  </thead>
+                  <tbody id="idFileTable"></tbody>
+		</table>
+              <td>  
+
+              <td style="vertical-align: top;" width="67%">
+		<div id="idJsonData" style="display: none;">
+                  <table>
+		    <tr class="dataRow"><td>ID DataFrame: </td>
+		      <td><span id="idDataFrame"></span></td></tr>
+                    <tr class="dataRow"><td>celex_id: </td>
+		      <td><span id="idViewCelexId"></span></td></tr>
+                    <tr class="dataRow"><td>uri: </td>
+		      <td><span id="idViewUri"></span></td></tr>
+                    <tr class="dataRow"><td>type: </td>
+		      <td><span id="idViewType"></span></td></tr>
+                    <tr class="dataRow"><td>concepts: </td>
+		      <td><span id="idViewConcepts"></span></td></tr>
+                    <tr class="dataRow"><td>title: </td>
+		      <td><span id="idViewTitle"></span></td></tr>
+                    <tr class="dataRow"><td>header: </td>
+		      <td><span id="idViewHeader"></span></td></tr>
+                    <tr class="dataRow"><td>recitals: </td>
+		      <td><span id="idViewRecitals"></span></td></tr>
+                    <tr class="dataRow"><td>main_body: </td>
+		      <td><span id="idViewMainBody"></span></td></tr>
+                    <tr class="dataRow"><td>attachments: </td>
+		      <td><span id="idViewAttachments"></span></td></tr>
+                  </table>
+		</div>
+              </td>
+            </tr>
+          </table>      
+        </div>
+      </div>
+
+      <div id='idCredits' style="display:none">
+        <h1>Crèdits</h1>
+        <p><span style='font-weight: bold'>Autor:</span>
+	  &nbsp;Albert Baranguer i Codina</p>
+        <p><span style='font-weight: bold'>Consultor:</span>
+	  &nbsp;Marc Maceira Duch</p>
+        <p><span style='font-weight: bold'>PRA:</span>
+	  &nbsp;Joan M. Nuñez Do Rio R.</p>
+        <p><span style='font-weight: bold'>Àrea del TFM:</span>
+	  &nbsp;Intel·ligència Artificial</p>
+        <p>Màster Universitari en Enginyeria Computacional i Matemàtica</p>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="idMessageBox"
+     tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="idMessageTitle"></h5>
+          </div>
+          <div class="modal-body">
+            <h3><span id="idMessageText"></span></h3>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary"
+		    data-dismiss="modal"
+		    onclick="closeMessageBox()">Sortir</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      goPage(1);
+    </script>
+    
+    <script src="bootstrap/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+</html>
