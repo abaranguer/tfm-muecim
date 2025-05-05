@@ -1,3 +1,10 @@
+const labels=[
+    "3559","1005","4381","4385","893","3173","5581","2560","4692","946",
+    "3611","1744","5573","3483","5231","2687","1565","4316","5034","2735",
+    "889","191","2965","4687","616","5228","2897","2871","1277","2783",
+    "3870","2488","2733","1264","4314","2681","1182","598","2737","5751",
+    "5969","4663","1602","4320","2121","2718","2850","4689","1442","4743"];
+
 const getPageNum = function() {
     let pageNum =  document.getElementById("idDestPage").value;
     if (pageNum > 1938) { pageNum = 1938; }
@@ -84,13 +91,26 @@ const setViewValues = function(idTotal, jsonResponse) {
     document.getElementById("idViewCelexId").innerHTML = jsonResponse.celex_id;
     document.getElementById("idViewUri").innerHTML = jsonResponse.uri;
     document.getElementById("idViewType").innerHTML = jsonResponse.type;
-    document.getElementById("idViewConcepts").innerHTML = jsonResponse.concepts;
+    document.getElementById("idViewConcepts").innerHTML = filter50Concepts(jsonResponse.concepts);
     document.getElementById("idViewTitle").innerHTML = jsonResponse.title;
     document.getElementById("idViewHeader").innerHTML = jsonResponse.header;
     document.getElementById("idViewRecitals").innerHTML = jsonResponse.recitals;
     document.getElementById("idViewMainBody").innerHTML = jsonResponse.main_body;
     document.getElementById("idViewAttachments").innerHTML = jsonResponse.attachments;
     document.getElementById("idJsonData").style="display:block";
+}
+
+const filter50Concepts = function(concepts) {
+    let retValue = [];
+    
+    for(let i = 0;  i < concepts.length; i++) {
+	let concept = concepts[i];
+	if (labels.includes(concept)) {
+            retValue.push(concept);
+	}
+    }
+
+    return retValue;
 }
 
 const filterName = function(fullPath) {
