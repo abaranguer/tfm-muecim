@@ -2,6 +2,7 @@
 from flask import Flask, request
 import json 
 import pandas as pd
+from classifiers.tfm_DistilBERTClassifier import DistilBERTClassifier
 
 app = Flask(__name__)
 
@@ -35,11 +36,11 @@ def getJsonData():
 @app.route('/classifier/<int:idDataFrame>')
 def getClassifications(idDataFrame):
     print('ID DataFrame rebut: ', idDataFrame)
-    print('Invoca classificador DistilBERT')
-    print('Invoca classificador BERT')
-    print('Invoca classificador GPT2')
 
-    return '{"resposta":"Endpoint actiu"}'
+    jsonResponse = distilBERTClassifier.predict(idDataFrame)
+
+    
+    return jsonResponse
 
 def getJsonFile(jsonPath):
     jsonFilePlain = None
@@ -51,6 +52,7 @@ def getJsonFile(jsonPath):
     
 if __name__ == '__main__':
     df = pd.read_csv('csv/50LabelsDataFrame.csv')
+    distilBERTClassifier = DistilBERTClassifier()
     ROWS_PER_PAGE = 15
     DF_LEN = len(df)
     NUM_PAGES = int(DF_LEN / ROWS_PER_PAGE) + 1
