@@ -1,0 +1,6 @@
+*~
+*.dat
+*.txt
+tfm_www.tar
+trained-models/
+__pycache__/
