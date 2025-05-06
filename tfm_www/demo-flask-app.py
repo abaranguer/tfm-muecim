@@ -3,6 +3,7 @@ from flask import Flask, request
 import json 
 import pandas as pd
 from classifiers.tfm_DistilBERTClassifier import DistilBERTClassifier
+from classifiers.tfm_BERTClassifier import BERTClassifier
 
 app = Flask(__name__)
 
@@ -37,10 +38,12 @@ def getJsonData():
 def getClassifications(idDataFrame):
     print('ID DataFrame rebut: ', idDataFrame)
 
-    jsonResponse = distilBERTClassifier.predict(idDataFrame)
+    jsonDB = distilBERTClassifier.predict(idDataFrame)
+    jsonB = bertClassifier.predict(idDataFrame)
 
+    fullResponse = '{"distilBert":' + jsonDB + ',"bert":' + jsonB + '}'
     
-    return jsonResponse
+    return fullResponse
 
 def getJsonFile(jsonPath):
     jsonFilePlain = None
@@ -53,6 +56,7 @@ def getJsonFile(jsonPath):
 if __name__ == '__main__':
     df = pd.read_csv('csv/50LabelsDataFrame.csv')
     distilBERTClassifier = DistilBERTClassifier()
+    bertClassifier = BERTClassifier()
     ROWS_PER_PAGE = 15
     DF_LEN = len(df)
     NUM_PAGES = int(DF_LEN / ROWS_PER_PAGE) + 1

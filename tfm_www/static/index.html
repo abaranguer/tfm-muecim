@@ -33,7 +33,7 @@
       <div id="idClassifier" style="display:none">
         <h1>Classificació i sumari</h1>
         <p />
-        <h3>Tria un fitxer</h3>
+        <h3>Tria un fitxer del dataset</h3>
         <p />
         <h3>Fitxers del dataset</h3>
         <div>
@@ -52,7 +52,7 @@
 		  <li class="nav-item" id="idLiClassify">
 		    <a class="nav-link" onclick="classify()">Classifica</a>
 		  </li>
-		  <li class="nav-item" id="idLiCredits">
+		  <li class="nav-item" id="idLiSummarize">
 		    <a class="nav-link" onclick="summarize()">Sumaritza</a>
 		  </li>
 		</ul>
@@ -68,6 +68,7 @@
               <td>  
 
               <td style="vertical-align: top;" width="67%">
+		
 		<div id="idJsonData" style="display: none;">
                   <table>
 		    <tr class="dataRow"><td>ID DataFrame: </td>
@@ -92,6 +93,37 @@
 		      <td><span id="idViewAttachments"></span></td></tr>
                   </table>
 		</div>
+		
+		<div id='idClassifierResults' style="display: none">
+		  <h1>Resultats de la classificació</h1>
+		  <p><span style='font-weight: bold'>Ground-truth:</span>
+		    <br />&nbsp;<span id="idGroundTruthClassifier"></span></p>
+		  <p><span style='font-weight: bold'>Resultats classificador DistilBERT:</span>
+		    <br />&nbsp;<span id="idResultClassifierDistilBert"></span></p>
+		  <p><span style='font-weight: bold'>Resultats classificador BERT:</span>
+		    <br />&nbsp;<span id="idResultClassifierBert"></span></p>
+		  <p><span style='font-weight: bold'>Resultats classificador GPT2:</span>
+		    <br />&nbsp;<span id="idResultClassifierGpt2"></span></p>
+		  <p />
+		  <button onclick="openJsonDetail()">Torna al detall</button>
+		</div>
+
+		<div id='idSummarizerResults' style="display: none">
+		  <h1>Resultats de la sumarització</h1>
+		  <p><span style='font-weight: bold'>Sumari DistilBERT:</span>
+		    &nbsp;<span id="idSummaryDistilBert"></span></p>
+		  <p><span style='font-weight: bold'>Sumari BERT:</span>
+		    &nbsp;<span id="idSumariBert"></span></p>
+		  <p><span style='font-weight: bold'>Sumari GPT2:</span>
+		    &nbsp;<span id="idSumariGpt2"></span></p>
+		  <p />
+		  <p><span style='font-weight: bold'>main-body (text base):</span>
+		    &nbsp;<span id="idSummarizerMainBody"></span></p>
+		  <p />
+		  <button onclick="openJsonDetail()">Torna al detall</button>	
+		</div>
+
+		
               </td>
             </tr>
           </table>      

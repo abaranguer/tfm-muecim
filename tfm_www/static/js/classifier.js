@@ -14,6 +14,15 @@ const classify = async function() {
     )
 
     const jsonObjs = await response.json();
+    console.log('response: ' + jsonObjs);
 
-    console.log('response: ' + jsonObjs)
+    loadClassifierResultsPane(jsonObjs);
+    openClassifierResults();
+}
+
+const loadClassifierResultsPane = function(jsonObjs) {
+    let groundTruth = document.getElementById('idViewConcepts').innerHTML;
+    document.getElementById('idGroundTruthClassifier').innerHTML =  groundTruth;
+    document.getElementById('idResultClassifierDistilBert').innerHTML = jsonObjs.distilBert;
+    document.getElementById('idResultClassifierBert').innerHTML = jsonObjs.bert;
 }
