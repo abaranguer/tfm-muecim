@@ -4,6 +4,7 @@ import json
 import pandas as pd
 from classifiers.tfm_DistilBERTClassifier import DistilBERTClassifier
 from classifiers.tfm_BERTClassifier import BERTClassifier
+from classifiers.tfm_GPT2Classifier import GPT2Classifier
 
 app = Flask(__name__)
 
@@ -38,10 +39,11 @@ def getJsonData():
 def getClassifications(idDataFrame):
     print('ID DataFrame rebut: ', idDataFrame)
 
-    jsonDB = distilBERTClassifier.predict(idDataFrame)
-    jsonB = bertClassifier.predict(idDataFrame)
+    predDistilBert = distilBERTClassifier.predict(idDataFrame)
+    predBert = bertClassifier.predict(idDataFrame)
+    predGpt2 = gpt2Classifier.predict(idDataFrame)    
 
-    fullResponse = '{"distilBert":' + jsonDB + ',"bert":' + jsonB + '}'
+    fullResponse = f'{{"distilBert": {predDistilBert},"bert": {predBert}, "gpt2": {predGpt2}}}'
     
     return fullResponse
 
@@ -57,6 +59,9 @@ if __name__ == '__main__':
     df = pd.read_csv('csv/50LabelsDataFrame.csv')
     distilBERTClassifier = DistilBERTClassifier()
     bertClassifier = BERTClassifier()
+    gpt2Classifier = GPT2Classifier()
+
+
     ROWS_PER_PAGE = 15
     DF_LEN = len(df)
     NUM_PAGES = int(DF_LEN / ROWS_PER_PAGE) + 1

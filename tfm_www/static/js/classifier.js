@@ -21,8 +21,23 @@ const classify = async function() {
 }
 
 const loadClassifierResultsPane = function(jsonObjs) {
+    openJsonDetail();
+    
     let groundTruth = document.getElementById('idViewConcepts').innerHTML;
+
     document.getElementById('idGroundTruthClassifier').innerHTML =  groundTruth;
-    document.getElementById('idResultClassifierDistilBert').innerHTML = jsonObjs.distilBert;
-    document.getElementById('idResultClassifierBert').innerHTML = jsonObjs.bert;
+    document.getElementById('idResultClassifierDistilBert').innerHTML = buildInnerHtml(jsonObjs.distilBert);
+    document.getElementById('idResultClassifierBert').innerHTML = buildInnerHtml(jsonObjs.bert);
+    document.getElementById('idResultClassifierGpt2').innerHTML = buildInnerHtml(jsonObjs.gpt2);    
+}
+
+const buildInnerHtml = function( jsonArray ) {
+    let retValue = "";
+
+    let numElems = jsonArray.length;
+    for(let i = 0; i < numElems; i++) {
+	retValue += (jsonArray[i] + "<br />")
+    }
+
+    return retValue;
 }
