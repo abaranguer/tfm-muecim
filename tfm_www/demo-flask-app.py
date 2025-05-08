@@ -5,6 +5,9 @@ import pandas as pd
 from classifiers.tfm_DistilBERTClassifier import DistilBERTClassifier
 from classifiers.tfm_BERTClassifier import BERTClassifier
 from classifiers.tfm_GPT2Classifier import GPT2Classifier
+from summarizers.tfm_BARTSummarizer import BARTSummarizer
+from summarizers.tfm_PegasusXSUMSummarizer import PegasusXSUMSummarizer
+from summarizers.tfm_GPT2Summarizer import GPT2Summarizer
 
 app = Flask(__name__)
 
@@ -47,6 +50,26 @@ def getClassifications(idDataFrame):
     
     return fullResponse
 
+@app.route('/summarizer', methods=['POST'])
+def getSummaries():
+    print('request.data: ', request.data)
+    body = json.loads(request.data)
+    jsonPath = body.get('jsonPath')
+    print('jsonPath: ', jsonPath)
+    with open(f'./{jsonPath}', 'r') as fd:
+        jsonFile = json.load(fd)
+    print('jsonFile: ', jsonFile)
+    mainBody = jsonFile.get('main_body')
+    print('mainBody: ', mainBody)
+
+    summBart = bartSummarizer.summarize(mainBody)
+    summPegasus= pegasusXsumSummarizer.summarize(mainBody)
+    summGpt2 = gpt2Summarizer.summarize(mainBody)    
+
+    fullResponse = f'{{"pegasus": {summPegasus},"bart": {summBart}, "gpt2": {summGpt2}}}'
+    
+    return fullResponse
+
 def getJsonFile(jsonPath):
     jsonFilePlain = None
     
@@ -61,6 +84,9 @@ if __name__ == '__main__':
     bertClassifier = BERTClassifier()
     gpt2Classifier = GPT2Classifier()
 
+    bartSummarizer = BARTSummarizer()
+    pegasusXsumSummarizer = PegasusXSUMSummarizer()
+    gpt2Summarizer = GPT2Summarizer()
 
     ROWS_PER_PAGE = 15
     DF_LEN = len(df)

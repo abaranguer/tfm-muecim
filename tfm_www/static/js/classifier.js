@@ -21,7 +21,7 @@ const classify = async function() {
 }
 
 const loadClassifierResultsPane = function(jsonObjs) {
-    openJsonDetail();
+    openClassifierResults();
     
     let groundTruth = document.getElementById('idViewConcepts').innerHTML;
 

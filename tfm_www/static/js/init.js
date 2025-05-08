@@ -60,7 +60,7 @@ const buildTable = function(jsonObjs) {
         let fullPath = jsonObjs['fileName'][jsonObj];
         let filtered = filterName(fullPath);
         tdFileName.innerHTML = filtered.fileName;
-        tdFileName.addEventListener('click', buildFileListener(idTotal, filtered.filteredFullpath));
+        tdFileName.addEventListener('click', buildFileListener(idTotal, filtered.filteredFullPath));
         trObj.appendChild(tdId);
 	trObj.appendChild(tdIdTotal);
         trObj.appendChild(tdFileName);
@@ -83,10 +83,10 @@ const loadJsonData = async function(idTotal, fullPath) {
     
     const jsonResponse = await response.json();
 
-    setViewValues(idTotal, jsonResponse);
+    setViewValues(idTotal, jsonResponse, fullPath);
 }
 
-const setViewValues = function(idTotal, jsonResponse) {
+const setViewValues = function(idTotal, jsonResponse, fullPath) {
     document.getElementById("idDataFrame").innerHTML = idTotal;
     document.getElementById("idViewCelexId").innerHTML = jsonResponse.celex_id;
     document.getElementById("idViewUri").innerHTML = jsonResponse.uri;
@@ -98,6 +98,8 @@ const setViewValues = function(idTotal, jsonResponse) {
     document.getElementById("idViewMainBody").innerHTML = jsonResponse.main_body;
     document.getElementById("idViewAttachments").innerHTML = jsonResponse.attachments;
     document.getElementById("idJsonData").style="display:block";
+    document.getElementById("idFullPath").value = fullPath;
+    console.log("idFullPath: " + fullPath);
 }
 
 const filter50Concepts = function(concepts) {
@@ -117,11 +119,11 @@ const filterName = function(fullPath) {
     let tokens = fullPath.split('/');
     let fileName =  tokens[4];
     fileName = fileName.substring(0, fileName.length - 4);
-    let filteredFullpath = 
+    let filteredFullPath = 
         '/data/' + tokens[1]  +
         '/' + tokens[2] +
         '/' + tokens[3] +
         '/' + fileName;
 
-    return { fileName, filteredFullpath };
+    return { fileName, filteredFullPath };
 }
