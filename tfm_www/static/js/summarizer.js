@@ -27,9 +27,9 @@ const loadSummarizerResultsPane = function(jsonObjs) {
     let mainBody = document.getElementById('idViewMainBody').innerHTML;
 
     document.getElementById('idSummarizerMainBody').innerHTML = mainBody;
-    document.getElementById('idSummaryPegasusXsum').innerHTML = jsonObjs.pegasus;
-    document.getElementById('idSummaryBart').innerHTML = jsonObjs.bart;
-    document.getElementById('idSummaryGpt2').innerHTML = jsonObjs.gpt2;    
+    document.getElementById('idSummaryPegasusXsum').innerHTML = jsonObjs.pegasus.pegasus;
+    document.getElementById('idSummaryBart').innerHTML = jsonObjs.bart.bart;
+    document.getElementById('idSummaryGpt2').innerHTML = jsonObjs.gpt2.gpt2;    
 }
 
 const buildInnerHtmlSum = function( jsonArray ) {

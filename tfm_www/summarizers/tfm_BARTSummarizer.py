@@ -6,6 +6,7 @@ class BARTSummarizer:
         self.summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
 
     def summarize(self, mainBody):
+        mainBody = mainBody[0]
         print(f'BARTSummarizer. mainBody:\n{mainBody}')
 
         summary = ''
@@ -13,7 +14,8 @@ class BARTSummarizer:
         try:
             summary = self.summarizer(mainBody, max_length=130, min_length=30, do_sample=False)
         except Exception as err:
-            summary = f"Error en generar el sumari:  {err=}, {type(err)=}"
+            summary = [{'summary_text': f"Error en generar el sumari:  {err=}, {type(err)=}"}]
 
-        
-        return f'{{"bart": {summary}}}'
+        summaryText = summary[0].get('summary_text')
+
+        return f'{{"bart": "{summaryText}"}}'

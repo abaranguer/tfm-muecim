@@ -9,6 +9,7 @@ class PegasusXSUMSummarizer:
         self.model = PegasusForConditionalGeneration.from_pretrained(modelName)
 
     def summarize(self, mainBody):
+        mainBody = mainBody[0]
         print(f'PegasusXSUMSummarizer. mainBody:\n{mainBody}')
 
 
@@ -25,7 +26,10 @@ class PegasusXSUMSummarizer:
             )
 
             summary = self.tokenizer.decode(output[0], skip_special_tokens=True)
+            
         except Exception as err:
             summary = f"Error en generar el sumari:  {err=}, {type(err)=}"
 
-        return f'{{"pegasus": {summary}}}'
+        summary = summary.replace('"','\"')
+            
+        return f'{{"pegasus": "{summary}"}}'

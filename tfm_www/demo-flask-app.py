@@ -46,7 +46,7 @@ def getClassifications(idDataFrame):
     predBert = bertClassifier.predict(idDataFrame)
     predGpt2 = gpt2Classifier.predict(idDataFrame)    
 
-    fullResponse = f'{{"distilBert": {predDistilBert},"bert": {predBert}, "gpt2": {predGpt2}}}'
+    fullResponse = f'{{"distilBert":{predDistilBert},"bert":{predBert},"gpt2":{predGpt2}}}'
     
     return fullResponse
 
