@@ -83,7 +83,9 @@ const loadJsonData = async function(idTotal, fullPath) {
     
     const jsonResponse = await response.json();
 
+    closeDetailAndResults();
     setViewValues(idTotal, jsonResponse, fullPath);
+    
 }
 
 const setViewValues = function(idTotal, jsonResponse, fullPath) {

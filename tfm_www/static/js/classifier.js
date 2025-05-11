@@ -1,5 +1,6 @@
 const classify = async function() {
     console.log('classify');
+    document.getElementById('idLoader').style="display: block;";
     let idDF = document.getElementById('idDataFrame').innerHTML - 1;
 
     let endPoint = `/classifier/${idDF}`;
@@ -13,8 +14,15 @@ const classify = async function() {
         }
     )
 
-    const jsonObjs = await response.json();
-    console.log('response: ' + jsonObjs);
+    let jsonObjs = {};
+    
+    try {
+        jsonObjs = await response.json();
+	console.log('response: ' + jsonObjs);
+    } catch(ex) {
+	console.log("Exception in classifier: " + ex.message);	
+	jsonObjs = {"distilBert": "error", "bert": "error", "gpt2": "error"}
+    }
 
     loadClassifierResultsPane(jsonObjs);
     openClassifierResults();
@@ -22,6 +30,7 @@ const classify = async function() {
 
 const loadClassifierResultsPane = function(jsonObjs) {
     openClassifierResults();
+    document.getElementById('idLoader').style="display: none;";
     
     let groundTruth = document.getElementById('idViewConcepts').innerHTML;
 

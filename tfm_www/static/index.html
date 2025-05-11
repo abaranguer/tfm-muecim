@@ -23,10 +23,10 @@
     <div class="container my-10">
       <ul class="nav nav-tabs">
         <li class="nav-item" id="idLiClassifier">
-          <a class="nav-link" onclick="canvi('classifier')">Classificació i sumari</a>
+          <button onclick="canvi('classifier')">Classificació i sumari</button>
         </li>
         <li class="nav-item" id="idLiCredits">
-          <a class="nav-link" onclick="canvi('credits')">Crèdits</a>
+          <button onclick="canvi('credits')">Crèdits</button>
         </li>
       </ul>
 
@@ -50,10 +50,10 @@
 
 		<ul class="nav nav-tabs">
 		  <li class="nav-item" id="idLiClassify">
-		    <a class="nav-link" onclick="classify()">Classifica</a>
+		    <button onclick="classify()">Classifica</button>
 		  </li>
 		  <li class="nav-item" id="idLiSummarize">
-		    <a class="nav-link" onclick="summarize()">Sumaritza</a>
+		    <button onclick="summarize()">Sumaritza</button>
 		  </li>
 		</ul>
 		
@@ -101,6 +101,7 @@
 		  <h1>Resultats de la classificació</h1>
 		  <p><span style='font-weight: bold'>Ground-truth:</span>
 		    <br />&nbsp;<span id="idGroundTruthClassifier"></span></p>
+		  <p />
 		  <p><span style='font-weight: bold'>Resultats classificador DistilBERT:</span>
 		    <br />&nbsp;<span id="idResultClassifierDistilBert"></span></p>
 		  <p><span style='font-weight: bold'>Resultats classificador BERT:</span>
@@ -113,20 +114,18 @@
 
 		<div id='idSummarizerResults' style="display: none">
 		  <h1>Resultats de la sumarització</h1>
+		  <p><span style='font-weight: bold'>main-body (text base):</span>
+		    &nbsp;<span id="idSummarizerMainBody"></span></p>
+		  <p />
 		  <p><span style='font-weight: bold'>Sumari Pegasus-XSUM:</span>
 		    &nbsp;<span id="idSummaryPegasusXsum"></span></p>
 		  <p><span style='font-weight: bold'>Sumari BART:</span>
 		    &nbsp;<span id="idSummaryBart"></span></p>
 		  <p><span style='font-weight: bold'>Sumari GPT2:</span>
 		    &nbsp;<span id="idSummaryGpt2"></span></p>
-		  <p />
-		  <p><span style='font-weight: bold'>main-body (text base):</span>
-		    &nbsp;<span id="idSummarizerMainBody"></span></p>
-		  <p />
-		  <button onclick="openJsonDetail()">Torna al detall</button>	
+		  <p /><p />
+		  <button onclick="openJsonDetail()">Torna al detall</button>
 		</div>
-
-		
               </td>
             </tr>
           </table>      
@@ -146,6 +145,10 @@
         <p>Màster Universitari en Enginyeria Computacional i Matemàtica</p>
       </div>
     </div>
+
+    <div id="idLoader" class="screenCenter" style="display: none;">
+      <img src="img/loader.gif" />
+    <div>
 
     <!-- Modal -->
     <div class="modal fade" id="idMessageBox"

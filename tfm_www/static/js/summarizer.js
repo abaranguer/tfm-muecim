@@ -1,6 +1,6 @@
 const summarize = async function() {
     console.log('summarize');
-
+    document.getElementById('idLoader').style="display: block;";
     let fullPath = document.getElementById('idFullPath').value;
     console.log("summarize file: " + fullPath);
 
@@ -13,9 +13,17 @@ const summarize = async function() {
 	    body: JSON.stringify( param )
         }
     )
-    
-    const jsonObjs = await response.json();
-    console.log('response: ' + jsonObjs);
+
+    let jsonObjs = {};
+    try {
+	jsonObjs = await response.json();
+	console.log('response: ' + jsonObjs);
+    } catch(ex) {
+	console.log("Exception in summarizer: " + ex.message);
+	jsonObjs = {"pegasus":{"pegasus": "error"},
+		    "bart": {"bart": "error"},
+		    "gpt2": {"gpt2": "error"}};
+    }
 
     loadSummarizerResultsPane(jsonObjs);
     openSummarizerResults();
@@ -23,7 +31,7 @@ const summarize = async function() {
 
 const loadSummarizerResultsPane = function(jsonObjs) {
     openSummarizerResults();
-    
+    document.getElementById('idLoader').style="display: none;";    
     let mainBody = document.getElementById('idViewMainBody').innerHTML;
 
     document.getElementById('idSummarizerMainBody').innerHTML = mainBody;
