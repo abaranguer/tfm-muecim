@@ -1,0 +1,161 @@
+/content/tfm_cache
+model.safetensors: 100%
+ 436M/436M [00:01<00:00, 283MB/s]
+Some weights of BertForSequenceClassification were not initialized from the model checkpoint at bert-base-cased and are newly initialized: ['classifier.bias', 'classifier.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+Begin epoch 1 train session - trainer evaluate
+Metrics for test set (before train)
+{'f1': 0.052504799285915164, 'roc_auc': np.float64(0.5087456713034949), 'accuracy': 0.0}
+Epoch train.
+ [2326/2326 08:06, Epoch 1/1]
+Epoch	Training Loss	Validation Loss	Model Preparation Time	F1	Roc Auc	Accuracy
+1	0.087700	0.081278	0.002900	0.280378	0.582656	0.081211
+Epoch train done.
+End epoch train session - trainer evaluate
+Metrics for test set (after train)
+{'f1': 0.2703296703296703, 'roc_auc': np.float64(0.5789907661363813), 'accuracy': 0.08253094910591471}
+End epoch train session
+Begin epoch 2 train session - trainer evaluate
+Metrics for test set (before train)
+{'f1': 0.2703296703296703, 'roc_auc': np.float64(0.5789907661363813), 'accuracy': 0.08253094910591471}
+Epoch train.
+ [2326/2326 08:06, Epoch 1/1]
+Epoch	Training Loss	Validation Loss	Model Preparation Time	F1	Roc Auc	Accuracy
+1	0.047400	0.045992	0.002800	0.762139	0.832543	0.577426
+Epoch train done.
+End epoch train session - trainer evaluate
+Metrics for test set (after train)
+{'f1': 0.7549019607843137, 'roc_auc': np.float64(0.8260265425366377), 'accuracy': 0.5667125171939478}
+End epoch train session
+Begin epoch 3 train session - trainer evaluate
+Metrics for test set (before train)
+{'f1': 0.7549019607843137, 'roc_auc': np.float64(0.8260265425366377), 'accuracy': 0.5667125171939478}
+Epoch train.
+ [2326/2326 08:03, Epoch 1/1]
+Epoch	Training Loss	Validation Loss	Model Preparation Time	F1	Roc Auc	Accuracy
+1	0.032700	0.035691	0.002800	0.804540	0.867535	0.655196
+Epoch train done.
+End epoch train session - trainer evaluate
+Metrics for test set (after train)
+{'f1': 0.8103764274636966, 'roc_auc': np.float64(0.8687957909305704), 'accuracy': 0.6585281980742779}
+End epoch train session
+Begin epoch 4 train session - trainer evaluate
+Metrics for test set (before train)
+{'f1': 0.8103764274636966, 'roc_auc': np.float64(0.8687957909305704), 'accuracy': 0.6585281980742779}
+Epoch train.
+ [2326/2326 08:03, Epoch 1/1]
+Epoch	Training Loss	Validation Loss	Model Preparation Time	F1	Roc Auc	Accuracy
+1	0.023800	0.031932	0.002700	0.821376	0.885728	0.676531
+Epoch train done.
+End epoch train session - trainer evaluate
+Metrics for test set (after train)
+{'f1': 0.8272552783109405, 'roc_auc': np.float64(0.886999723954312), 'accuracy': 0.688101788170564}
+End epoch train session
+Begin epoch 5 train session - trainer evaluate
+Metrics for test set (before train)
+{'f1': 0.8272552783109405, 'roc_auc': np.float64(0.886999723954312), 'accuracy': 0.688101788170564}
+Epoch train.
+ [2326/2326 08:04, Epoch 1/1]
+Epoch	Training Loss	Validation Loss	Model Preparation Time	F1	Roc Auc	Accuracy
+1	0.017500	0.030785	0.002600	0.824167	0.893862	0.682381
+Epoch train done.
+End epoch train session - trainer evaluate
+Metrics for test set (after train)
+{'f1': 0.8336252189141856, 'roc_auc': np.float64(0.8967284605258304), 'accuracy': 0.6925722145804677}
+End epoch train session
+Begin epoch 6 train session - trainer evaluate
+Metrics for test set (before train)
+{'f1': 0.8336252189141856, 'roc_auc': np.float64(0.8967284605258304), 'accuracy': 0.6925722145804677}
+Epoch train.
+ [2326/2326 08:06, Epoch 1/1]
+Epoch	Training Loss	Validation Loss	Model Preparation Time	F1	Roc Auc	Accuracy
+1	0.013000	0.030844	0.002600	0.828982	0.901090	0.687199
+Epoch train done.
+End epoch train session - trainer evaluate
+Metrics for test set (after train)
+{'f1': 0.8389672611125898, 'roc_auc': np.float64(0.9040783952870038), 'accuracy': 0.7056396148555708}
+End epoch train session
+Begin epoch 7 train session - trainer evaluate
+Metrics for test set (before train)
+{'f1': 0.8389672611125898, 'roc_auc': np.float64(0.9040783952870038), 'accuracy': 0.7056396148555708}
+Epoch train.
+ [2326/2326 08:06, Epoch 1/1]
+Epoch	Training Loss	Validation Loss	Model Preparation Time	F1	Roc Auc	Accuracy
+1	0.009700	0.031507	0.003900	0.828824	0.902426	0.689952
+Epoch train done.
+End epoch train session - trainer evaluate
+Metrics for test set (after train)
+{'f1': 0.8354932557524465, 'roc_auc': np.float64(0.9048346681945678), 'accuracy': 0.6946354883081155}
+End epoch train session
+Begin epoch 8 train session - trainer evaluate
+Metrics for test set (before train)
+{'f1': 0.8354932557524465, 'roc_auc': np.float64(0.9048346681945678), 'accuracy': 0.6946354883081155}
+Epoch train.
+ [2326/2326 08:08, Epoch 1/1]
+Epoch	Training Loss	Validation Loss	Model Preparation Time	F1	Roc Auc	Accuracy
+1	0.007400	0.032097	0.002700	0.836030	0.908029	0.696146
+Epoch train done.
+End epoch train session - trainer evaluate
+Metrics for test set (after train)
+{'f1': 0.8409001184366364, 'roc_auc': np.float64(0.9094655325534949), 'accuracy': 0.7059834938101788}
+End epoch train session
+Begin epoch 9 train session - trainer evaluate
+Metrics for test set (before train)
+{'f1': 0.8409001184366364, 'roc_auc': np.float64(0.9094655325534949), 'accuracy': 0.7059834938101788}
+Epoch train.
+ [2326/2326 08:03, Epoch 1/1]
+Epoch	Training Loss	Validation Loss	Model Preparation Time	F1	Roc Auc	Accuracy
+1	0.005700	0.033034	0.002700	0.833981	0.906742	0.693393
+Epoch train done.
+End epoch train session - trainer evaluate
+Metrics for test set (after train)
+{'f1': 0.8426995798319328, 'roc_auc': np.float64(0.9112571987507703), 'accuracy': 0.7094222833562586}
+End epoch train session
+Begin epoch 10 train session - trainer evaluate
+Metrics for test set (before train)
+{'f1': 0.8426995798319328, 'roc_auc': np.float64(0.9112571987507703), 'accuracy': 0.7094222833562586}
+Epoch train.
+ [2326/2326 08:03, Epoch 1/1]
+Epoch	Training Loss	Validation Loss	Model Preparation Time	F1	Roc Auc	Accuracy
+1	0.004500	0.034294	0.002700	0.833312	0.906964	0.698899
+Epoch train done.
+End epoch train session - trainer evaluate
+Metrics for test set (after train)
+{'f1': 0.8403976975405547, 'roc_auc': np.float64(0.9115550693099402), 'accuracy': 0.7083906464924347}
+End epoch train session
+Begin epoch 11 train session - trainer evaluate
+Metrics for test set (before train)
+{'f1': 0.8403976975405547, 'roc_auc': np.float64(0.9115550693099402), 'accuracy': 0.7083906464924347}
+Epoch train.
+ [2326/2326 08:05, Epoch 1/1]
+Epoch	Training Loss	Validation Loss	Model Preparation Time	F1	Roc Auc	Accuracy
+1	0.003500	0.035045	0.002700	0.836845	0.911350	0.696834
+Epoch train done.
+End epoch train session - trainer evaluate
+Metrics for test set (after train)
+{'f1': 0.8454521761793068, 'roc_auc': np.float64(0.9156816001183476), 'accuracy': 0.7132049518569463}
+End epoch train session
+Begin epoch 12 train session - trainer evaluate
+Metrics for test set (before train)
+{'f1': 0.8454521761793068, 'roc_auc': np.float64(0.9156816001183476), 'accuracy': 0.7132049518569463}
+Epoch train.
+ [2326/2326 08:03, Epoch 1/1]
+Epoch	Training Loss	Validation Loss	Model Preparation Time	F1	Roc Auc	Accuracy
+1	0.003000	0.036441	0.002800	0.836120	0.910472	0.701652
+Epoch train done.
+End epoch train session - trainer evaluate
+Metrics for test set (after train)
+{'f1': 0.8475061857012632, 'roc_auc': np.float64(0.916986598612075), 'accuracy': 0.7159559834938102}
+End epoch train session
+Begin epoch 13 train session - trainer evaluate
+Metrics for test set (before train)
+{'f1': 0.8475061857012632, 'roc_auc': np.float64(0.916986598612075), 'accuracy': 0.7159559834938102}
+Epoch train.
+ [2326/2326 08:03, Epoch 1/1]
+Epoch	Training Loss	Validation Loss	Model Preparation Time	F1	Roc Auc	Accuracy
+1	0.002600	0.037073	0.002700	0.834725	0.910426	0.699243
+Epoch train done.
+End epoch train session - trainer evaluate
+Metrics for test set (after train)
+{'f1': 0.8438313378448724, 'roc_auc': np.float64(0.9153817355562653), 'accuracy': 0.7101100412654745}
+End epoch train session
